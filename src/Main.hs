@@ -1,3 +1,5 @@
 module Main where
 
-main = return ()
+import qualified CreditCardValidator
+
+main = CreditCardValidator.main

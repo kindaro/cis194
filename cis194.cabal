@@ -17,7 +17,7 @@ cabal-version:       >=1.10
 
 executable cis194
   main-is:             Main.hs
-  -- other-modules:       
+  other-modules:       CreditCardValidator
   -- other-extensions:    
   build-depends:       base >=4.8 && <4.9
   hs-source-dirs:      src
