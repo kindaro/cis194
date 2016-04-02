@@ -8,4 +8,4 @@ eiFilter f xs = map (conditional f) xs
         | otherwise = Left x
 
 numberToDigits :: Integer -> [Integer]
-numberToDigits n = map (read . (:[])) (show n)
+numberToDigits = (map (read . return)) . show

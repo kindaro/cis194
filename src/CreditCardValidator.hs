@@ -1,13 +1,21 @@
 module CreditCardValidator where
 
+import Control.Monad
+import Control.Applicative
+
 import Helpers
 
+main :: IO ()
 main = do
-    cardNumber <- getLine
-    print $ luhnDigit $ read (filter (\x -> elem x ['0'..'9']) cardNumber)
+    liftM (luhnDigit . read . filterDigits) getLine >>= print
+    where
+        filterDigits = filter  (`elem` ['0'..'9'])
 
 luhnDigit :: Integer -> Integer
-luhnDigit n = (\x -> mod x 10) . sum $ map (either snd ((*2) . snd)) $ eiFilter fst (zip (map even [1..]) $ reverse $ numberToDigits n)
+luhnDigit n = mod10 . sum . concat . (map numberToDigits) . (map doubleRights) $ eiEven $ reverse $ numberToDigits n
     where
+        mod10 = flip mod 10
+        doubleRights = either id (*2)
+        eiEven = (map (either (Left . snd) (Right . snd))) . (eiFilter fst) . zip (even <$> [1..])
 
 luhnCheck = (0 ==) . luhnDigit
